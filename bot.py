@@ -9,8 +9,11 @@ class Bot:
         self.pathdrive = os.getcwd()+"/chromedriver.exe"
         self.driver = webdriver.Chrome(executable_path = self.pathdrive)
     
-    def init(self):
-        print(self.pathdrive)
+    def logar(self):
+        driver = self.driver
+        driver.get("https://www.instagram.com/")
+        time.sleep(2)
+        
 
 bot = Bot('kami',1231)
-bot.init()
+bot.logar()
