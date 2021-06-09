@@ -12,7 +12,6 @@ class Bot:
     def logar(self):
         driver = self.driver
         driver.get("https://www.instagram.com/")
-        time.sleep(2)
         
 
 bot = Bot('kami',1231)
