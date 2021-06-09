@@ -1,2 +1,4 @@
 *.exe
 /chromedriver.exe
+/config.py
+/__pycache__
