@@ -1,3 +1,4 @@
+from platform import processor
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import os
@@ -26,15 +27,29 @@ class Bot:
         campo_Senha.send_keys(Keys.RETURN)
         time.sleep(5)
 
-        driver.get("https://www.instagram.com/")
+        driver.get("https://www.instagram.com/"+self.email)
+        self.pegarImagen()
+
+    def pegarImagen(self):
+        drive = self.driver
+        imagemLinks = []
+        aLinks = drive.find_elements_by_tag_name('a')
+        for x in aLinks:
+            aux = x.__getattribute__('href')
+            if '/p/' in aux:
+                imagemLinks.append(aux)
+
+
+    def logs(self,link):
+        self.link = link
+        print(link)
     
     def close(self):
-        drive = self.driver;
-        drive.close()
+        drive = self.driver
         
 
 bot = Bot(EMAIL,SENHA)
 bot.logar()
 bot.close()
 time.sleep(5)
-exit()
+
