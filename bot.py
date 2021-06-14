@@ -30,7 +30,19 @@ class Bot:
         time.sleep(5)
 
         driver.get("https://www.instagram.com/"+self.email)
+        self.scrollFinal()
         self.pegarLinksPostagens()
+      
+    def scrollFinal(self):
+        driver = self.driver
+        alturaAnterior = driver.execute_script("return document.body.scrollHeight")  #Referencia https://qastack.com.br/programming/20986631/how-can-i-scroll-a-web-page-using-selenium-webdriver-in-python
+        while True:
+            driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            time.sleep(1)
+            altura = driver.execute_script("return document.body.scrollHeight")
+            if(alturaAnterior == altura):
+                break   
+            alturaAnterior = altura  
 
     def pegarLinksPostagens(self):
         drive = self.driver
@@ -63,9 +75,10 @@ class Bot:
         
 bot = Bot(EMAIL,SENHA)
 bot.logar()
-bot.listarPost()
+bot.pegarLinksPostagens()
 bot.pegarTodasFotos()
-##time.sleep(5)
-##bot.close()
+bot.listarPost()
+#time.sleep(5)
+#bot.close()
 
 
