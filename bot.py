@@ -12,6 +12,8 @@ class Bot:
         self.senha = senha
         self.pathdrive = os.getcwd()+"/chromedriver.exe"
         self.driver = webdriver.Chrome(executable_path = self.pathdrive)
+        self.postagens = []
+        self.linkFotos = []
     
     def logar(self):
         driver = self.driver
@@ -28,28 +30,42 @@ class Bot:
         time.sleep(5)
 
         driver.get("https://www.instagram.com/"+self.email)
-        self.pegarImagen()
+        self.pegarLinksPostagens()
 
-    def pegarImagen(self):
+    def pegarLinksPostagens(self):
         drive = self.driver
-        imagemLinks = []
-        aLinks = drive.find_elements_by_tag_name('a')
-        for x in aLinks:
-            aux = x.__getattribute__('href')
-            if '/p/' in aux:
-                imagemLinks.append(aux)
+        lista_link = drive.find_elements_by_tag_name('a')
+        for i in lista_link:
+            if "/p/" in i.get_attribute('href'):
+                self.postagens.append(i.get_attribute('href'))
 
-
-    def logs(self,link):
-        self.link = link
-        print(link)
     
-    def close(self):
-        drive = self.driver
-        
+    def listarPost(self):
+        print(self.postagens)
+        print('Quantidade de link: ',len(self.postagens))
+    
+    def navegarLinks(self,postLink):
+        driver = self.driver
+        driver.get(postLink)
+        link = driver.find_element_by_class_name('FFVAD').get_attribute('src')
+        self.linkFotos.append(link)
 
+    def pegarTodasFotos(self):
+        for i in self.postagens:
+            self.navegarLinks(i)
+
+        for i in self.linkFotos:
+            print(i)
+
+  
+    def close(self):
+        drive = self.driver.close()
+        
 bot = Bot(EMAIL,SENHA)
 bot.logar()
-bot.close()
-time.sleep(5)
+bot.listarPost()
+bot.pegarTodasFotos()
+##time.sleep(5)
+##bot.close()
+
 
