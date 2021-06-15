@@ -1,4 +1,3 @@
-from platform import processor
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import os
@@ -7,9 +6,10 @@ import time
 from config import EMAIL, SENHA
 
 class Bot:
-    def __init__(self,email,senha):
+    def __init__(self,email,senha,alvo=''):
         self.email = email
         self.senha = senha
+        self.alvo = alvo
         self.pathdrive = os.getcwd()+"/chromedriver.exe"
         self.driver = webdriver.Chrome(executable_path = self.pathdrive)
         self.postagens = []
@@ -32,10 +32,16 @@ class Bot:
         driver.get("https://www.instagram.com/"+self.email)
         self.scrollFinal()
         self.pegarLinksPostagens()
+    
+    def UsuarioAlvo(self):
+        drive = self.driver
+        drive.get("https://www.instagram.com/"+self.alvo)
+        self.scrollFinal()
+
       
-    def scrollFinal(self):
-        driver = self.driver
-        alturaAnterior = driver.execute_script("return document.body.scrollHeight")  #Referencia https://qastack.com.br/programming/20986631/how-can-i-scroll-a-web-page-using-selenium-webdriver-in-python
+    def scrollFinal(self):   #Scroll até o final da pagina
+        driver = self.driver #Referencia https://qastack.com.br/programming/20986631/how-can-i-scroll-a-web-page-using-selenium-webdriver-in-python
+        alturaAnterior = driver.execute_script("return document.body.scrollHeight")  
         while True:
             driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
             time.sleep(1)
@@ -75,6 +81,7 @@ class Bot:
         
 bot = Bot(EMAIL,SENHA)
 bot.logar()
+#bot.UsuarioAlvo()
 bot.pegarLinksPostagens()
 bot.pegarTodasFotos()
 bot.listarPost()
