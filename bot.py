@@ -35,6 +35,7 @@ class Bot:
     
     def logOff(self):
         drive = self.driver
+        drive.get("https://www.instagram.com/"+self.email)
         clickPerfil = drive.find_element_by_class_name("_6q-tv")
         clickPerfil.click()
         time.sleep(1)
@@ -52,7 +53,7 @@ class Bot:
         alturaAnterior = driver.execute_script("return document.body.scrollHeight")  
         while True:
             driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-            time.sleep(1)
+            time.sleep(1.3)
             altura = driver.execute_script("return document.body.scrollHeight")
             if(alturaAnterior == altura):
                 break   
@@ -67,7 +68,6 @@ class Bot:
 
     
     def listarPost(self):
-        print(self.postagens)
         print('Quantidade de link: ',len(self.postagens))
     
     def navegarLinks(self,postLink):
@@ -82,19 +82,25 @@ class Bot:
 
         for i in self.linkFotos:
             print(i)
-
+    
+    def salvarFoto(self):
+        drive = self.driver
+        for i in range(len(self.linkFotos)):
+            drive.get(self.linkFotos[i])
+            drive.get_screenshot_as_file('./prints/'+str(i)+'.png')
+            
   
     def close(self):
-        drive = self.driver.close()
+        self.driver.close()
         
 bot = Bot(EMAIL,SENHA)
 bot.logar()
-# bot.UsuarioAlvo()
-# bot.pegarLinksPostagens()
-# bot.pegarTodasFotos()
-# bot.listarPost()
+bot.UsuarioAlvo()
+bot.pegarLinksPostagens()
+bot.pegarTodasFotos()
+bot.listarPost()
+bot.salvarFoto()
 bot.logOff()
 #time.sleep(5)
-#bot.close()
-
-
+bot.close()
+exit()
