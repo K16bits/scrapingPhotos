@@ -2,4 +2,4 @@
 /chromedriver.exe
 /config.py
 /__pycache__
-prints
+*.png
