@@ -33,6 +33,14 @@ class Bot:
         self.scrollFinal()
         self.pegarLinksPostagens()
     
+    def logOff(self):
+        drive = self.driver
+        clickPerfil = drive.find_element_by_class_name("_6q-tv")
+        clickPerfil.click()
+        time.sleep(1)
+        clickSair = drive.find_element_by_xpath(r"//div[contains(text(),'Sair')]")
+        clickSair.click()
+    
     def UsuarioAlvo(self):
         drive = self.driver
         drive.get("https://www.instagram.com/"+self.alvo)
@@ -81,10 +89,11 @@ class Bot:
         
 bot = Bot(EMAIL,SENHA)
 bot.logar()
-#bot.UsuarioAlvo()
-bot.pegarLinksPostagens()
-bot.pegarTodasFotos()
-bot.listarPost()
+# bot.UsuarioAlvo()
+# bot.pegarLinksPostagens()
+# bot.pegarTodasFotos()
+# bot.listarPost()
+bot.logOff()
 #time.sleep(5)
 #bot.close()
 
