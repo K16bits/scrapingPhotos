@@ -1,5 +1,5 @@
 # scrapingPhotos
-## Pega os links das suas fotos das postagem e printa no terminal
+## Salva as fotos das postagens(suas ou de um alvo)
 
 # Requisitos
 - Python3
