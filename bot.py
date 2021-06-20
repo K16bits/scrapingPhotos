@@ -93,7 +93,7 @@ class Bot:
     def close(self):
         self.driver.close()
         
-bot = Bot(EMAIL,SENHA,)
+bot = Bot(EMAIL,SENHA)
 bot.logar()
 # bot.UsuarioAlvo()
 bot.pegarLinksPostagens()
